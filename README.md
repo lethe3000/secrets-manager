@@ -15,6 +15,7 @@ Secret with type will be watched:
 ## In Cluster as Deployment
 
 ```shell script
+$ kubectl create ns kube-secretmanager
 $ kubectl apply -f deploy/all-in-one.yaml
 ```
 
