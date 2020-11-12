@@ -1,0 +1,41 @@
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: secrets-manager-clusterrolebinding
+subjects:
+  - kind: ServiceAccount
+    name: secrets-manager
+    namespace: kube-secretmanager
+roleRef:
+  kind: ClusterRole
+  name: cluster-admin
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: secrets-manager
+  namespace: kube-secretmanager
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: secrets-manager
+  namespace: kube-secretmanager
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: secrets-manager
+  template:
+    metadata:
+      labels:
+        app: secrets-manager
+    spec:
+      containers:
+        - image: lethe3000/secrets-manager:latest
+          imagePullPolicy: Always
+          name: secrets-manager
+      restartPolicy: Always
+      serviceAccount: secrets-manager
+      serviceAccountName: secrets-manager
