@@ -3,13 +3,14 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/spf13/cobra"
 	"io/ioutil"
-	"k8s.io/klog"
 	"os"
 	"secrets-manager/pkg/kube"
 	"secrets-manager/pkg/trackers"
 	"secrets-manager/version"
+
+	"github.com/spf13/cobra"
+	"k8s.io/klog"
 )
 
 func main() {
@@ -23,7 +24,7 @@ func main() {
 
 	init := func() {
 		err := kube.Init(kube.InitOptions{
-			kube.KubeConfigOptions{
+			KubeConfigOptions: kube.KubeConfigOptions{
 				ConfigPath: kubeConfig,
 				Context:    kubeContext,
 			}})
